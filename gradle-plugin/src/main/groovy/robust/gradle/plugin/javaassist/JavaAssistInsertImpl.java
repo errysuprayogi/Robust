@@ -45,6 +45,7 @@ public class JavaAssistInsertImpl extends InsertcodeStrategy {
 //        new ForkJoinPool().submit {
         for (CtClass ctClass : box) {
             if (isNeedInsertClass(ctClass.getName())) {
+                System.out.println("Insert ClassName "+ctClass.getName());
                 //change class modifier
                 ctClass.setModifiers(AccessFlag.setPublic(ctClass.getModifiers()));
                 if (ctClass.isInterface() || ctClass.getDeclaredMethods().length < 1) {

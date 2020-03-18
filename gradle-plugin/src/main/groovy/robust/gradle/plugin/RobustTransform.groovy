@@ -140,6 +140,7 @@ class RobustTransform extends Transform implements Plugin<Project> {
         outputProvider.deleteAll()
         File jarFile = outputProvider.getContentLocation("main", getOutputTypes(), getScopes(),
                 Format.JAR);
+        System.out.println("JarFile Path "+jarFile.getPath())
         if(!jarFile.getParentFile().exists()){
             jarFile.getParentFile().mkdirs();
         }

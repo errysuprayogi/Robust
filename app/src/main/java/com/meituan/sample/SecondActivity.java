@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.meituan.robust.patch.RobustModify;
 import com.meituan.robust.patch.annotaion.Add;
 import com.meituan.robust.patch.annotaion.Modify;
 
@@ -31,7 +32,7 @@ public class SecondActivity extends AppCompatActivity implements View.OnClickLis
         listView = (ListView) findViewById(R.id.listview);
         TextView textView = (TextView) findViewById(R.id.secondtext);
         textView.setOnClickListener(v -> {
-//                    RobustModify.modify();
+                    RobustModify.modify();
                     Log.d("robust", " onclick  in Listener");
                 }
         );
@@ -43,7 +44,7 @@ public class SecondActivity extends AppCompatActivity implements View.OnClickLis
         listView.setAdapter(adapter);
     }
 
-//    @Modify
+    @Modify
     public String getTextInfo() {
         getArray();
         return "error occur " ;

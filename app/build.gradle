@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 //apply plugin: 'auto-patch-plugin'
 apply plugin: 'robust'
+//apply plugin: 'dynamic-plugin'
 
 android {
     compileSdkVersion 25
@@ -71,5 +72,6 @@ dependencies {
     compile 'com.google.code.gson:gson:2.3.1'
     compile 'com.android.support:design:25.4.0'
     compile 'org.javassist:javassist:3.20.0-GA'
-    compile project(path: ':patch')
+    compile 'com.tokopedia.patch:robust:0.1.1'
+//    compile project(path: ':patch')
 }

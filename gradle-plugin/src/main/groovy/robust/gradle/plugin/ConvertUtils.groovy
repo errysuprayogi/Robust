@@ -19,6 +19,7 @@ class ConvertUtils {
         inputs.each {
             it.directoryInputs.each {
                 def dirPath = it.file.absolutePath
+                println("dirPath classes "+dirPath)
                 classPool.insertClassPath(it.file.absolutePath)
                 org.apache.commons.io.FileUtils.listFiles(it.file, null, true).each {
                     if (it.absolutePath.endsWith(SdkConstants.DOT_CLASS)) {
@@ -27,11 +28,13 @@ class ConvertUtils {
                             throw new RuntimeException("You have duplicate classes with the same name : "+className+" please remove duplicate classes ")
                         }
                         classNames.add(className)
+//                        println("add className "+className)
                     }
                 }
             }
 
             it.jarInputs.each {
+                println("dirPath jar "+it.file.absolutePath)
                 classPool.insertClassPath(it.file.absolutePath)
                 def jarFile = new JarFile(it.file)
                 Enumeration<JarEntry> classes = jarFile.entries();
@@ -44,6 +47,7 @@ class ConvertUtils {
                             throw new RuntimeException("You have duplicate classes with the same name : "+className+" please remove duplicate classes ")
                         }
                         classNames.add(className)
+//                        println("add className jar entry "+className)
                     }
                 }
             }
