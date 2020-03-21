@@ -124,7 +124,7 @@ class RobustTransform extends Transform implements Plugin<Project> {
 
     @Override
     Set<QualifiedContent.Scope> getScopes() {
-        return TransformManager.SCOPE_FULL_PROJECT
+        return TransformManager.SCOPE_FULL_WITH_FEATURES
     }
 
     @Override
@@ -155,7 +155,7 @@ class RobustTransform extends Transform implements Plugin<Project> {
 
         def box = ConvertUtils.toCtClasses(inputs, classPool)
         def cost = (System.currentTimeMillis() - startTime) / 1000
-//        logger.quiet "check all class cost $cost second, class count: ${box.size()}"
+        logger.quiet "check all class cost $cost second, class count: ${box.size()}"
         if(useASM){
             insertcodeStrategy=new AsmInsertImpl(hotfixPackageList,hotfixMethodList,exceptPackageList,exceptMethodList,isHotfixMethodLevel,isExceptMethodLevel);
         }else {

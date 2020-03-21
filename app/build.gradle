@@ -1,18 +1,18 @@
 apply plugin: 'com.android.application'
-apply plugin: 'me.tatarka.retrolambda'
+//apply plugin: 'me.tatarka.retrolambda'
 //apply plugin: 'auto-patch-plugin'
 apply plugin: 'robust'
 //apply plugin: 'dynamic-plugin'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '25.0.2'
+    compileSdkVersion 26
     defaultConfig {
         applicationId "com.meituan.robust.sample"
-        minSdkVersion 9
-        targetSdkVersion 25
+        minSdkVersion 14
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
     lintOptions {
         checkReleaseBuilds false
@@ -37,8 +37,8 @@ android {
             signingConfig signingConfigs.meituan
         }
         debug {
-            minifyEnabled true
-//            minifyEnabled false
+//            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -63,15 +63,15 @@ configurations.all {
     resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
 }
 dependencies {
-    compile 'com.google.code.gson:gson:2.7'
-    compile 'com.squareup.picasso:picasso:2.5.2'
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.squareup.okhttp:okhttp:2.5.0'
-    compile 'com.google.code.gson:gson:2.3.1'
-    compile 'com.android.support:design:25.4.0'
-    compile 'org.javassist:javassist:3.20.0-GA'
-    compile 'com.tokopedia.patch:robust:0.1.1'
-//    compile project(path: ':patch')
+    implementation 'com.google.code.gson:gson:2.7'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    testImplementation 'junit:junit:4.12'
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.squareup.okhttp:okhttp:2.5.0'
+    implementation 'com.google.code.gson:gson:2.3.1'
+    implementation 'com.android.support:design:26.1.0'
+    implementation 'org.javassist:javassist:3.20.0-GA'
+    implementation 'com.tokopedia.patch:robust:0.1.1'
+//    implementation project(path: ':patch')
 }
