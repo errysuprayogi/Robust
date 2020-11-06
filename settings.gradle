@@ -1,4 +1,4 @@
-include ':app'
+include ':app', ':dynamicfeature'
 include ':autopatchbase'
 include ':gradle-plugin'
 include ':dynamic-plugin'

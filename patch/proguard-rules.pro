@@ -2,4 +2,4 @@
 -keep class meituan.robust.**{*;}
 -keep class com.google.gson.**{*;}
 -keepattributes *Annotation*
-
+-ignorewarnings

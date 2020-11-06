@@ -54,7 +54,7 @@ public class JavaAssistInsertImpl extends InsertcodeStrategy {
                     zipFile(ctClass.toBytecode(), outStream, ctClass.getName().replaceAll("\\.", "/") + ".class");
                     continue;
                 }
-
+//
                 boolean addIncrementalChange = false;
                 for (CtBehavior ctBehavior : ctClass.getDeclaredBehaviors()) {
                     if (!addIncrementalChange) {
@@ -103,7 +103,7 @@ public class JavaAssistInsertImpl extends InsertcodeStrategy {
                     }
                 }
             }
-            //zip the inserted-classes into output file
+//            //zip the inserted-classes into output file
             zipFile(ctClass.toBytecode(), outStream, ctClass.getName().replaceAll("\\.", "/") + ".class");
         }
 //        }.get()

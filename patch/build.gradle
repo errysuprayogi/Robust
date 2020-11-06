@@ -1,10 +1,10 @@
 apply plugin: 'com.android.library'
 project.archivesBaseName = 'robust'
 android {
-    compileSdkVersion 24
+    compileSdkVersion 26
     defaultConfig {
         minSdkVersion 9
-        targetSdkVersion 24
+        targetSdkVersion 26
         versionCode 1
         versionName '1.0'
     }
@@ -15,14 +15,12 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     packagingOptions {
-        exclude 'META-INF/maven/com.google.guava/guava/pom.properties'
-        exclude 'META-INF/maven/com.google.guava/guava/pom.xml'
-        exclude 'META-INF/maven/commons-cli/commons-cli/pom.properties'
-        exclude 'META-INF/maven/commons-cli/commons-cli/pom.xml'
+        exclude 'META-INF/**'
+        exclude "**/module-info.class"
     }
 }
 configurations.all {
@@ -30,7 +28,7 @@ configurations.all {
 }
 dependencies {
 //    compile 'com.meituan.robust:autopatchbase:' + VERSION_NAME
-    implementation project(':autopatchbase')
+    api project(':autopatchbase')
 }
 
 apply from: '../gradle_mvn_push.gradle'

@@ -124,7 +124,7 @@ class RobustTransform extends Transform implements Plugin<Project> {
 
     @Override
     Set<QualifiedContent.Scope> getScopes() {
-        return TransformManager.SCOPE_FULL_WITH_FEATURES
+        return TransformManager.SCOPE_FULL_PROJECT
     }
 
     @Override

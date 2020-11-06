@@ -13,10 +13,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.meituan.robust.patch.RobustModify;
-import com.meituan.robust.patch.annotaion.Add;
-import com.meituan.robust.patch.annotaion.Modify;
-
 import java.lang.reflect.Field;
 
 public class SecondActivity extends AppCompatActivity implements View.OnClickListener {
@@ -31,11 +27,13 @@ public class SecondActivity extends AppCompatActivity implements View.OnClickLis
 
         listView = (ListView) findViewById(R.id.listview);
         TextView textView = (TextView) findViewById(R.id.secondtext);
-        textView.setOnClickListener(v -> {
-                    RobustModify.modify();
-                    Log.d("robust", " onclick  in Listener");
-                }
-        );
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                RobustModify.modify();
+                Log.d("robust", " onclick  in Listener");
+            }
+        });
         //change text on the  SecondActivity
         textView.setText(getTextInfo());
 
@@ -44,14 +42,12 @@ public class SecondActivity extends AppCompatActivity implements View.OnClickLis
         listView.setAdapter(adapter);
     }
 
-    @Modify
     public String getTextInfo() {
         getArray();
         return "error occur " ;
 //        return "error fixed";
     }
 
-    @Add
     public String[] getArray() {
        return new String[]{"hello","world"};
     }
@@ -92,4 +88,6 @@ public class SecondActivity extends AppCompatActivity implements View.OnClickLis
         }
         return null;
     }
+
 }
+

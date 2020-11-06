@@ -30,6 +30,7 @@ public class PatchExecutor extends Thread {
         try {
             //拉取补丁列表
             List<Patch> patches = fetchPatchList();
+            robustCallBack.onPatchListFetched(true, true, patches);
             //应用补丁列表
             applyPatchList(patches);
         } catch (Throwable t) {

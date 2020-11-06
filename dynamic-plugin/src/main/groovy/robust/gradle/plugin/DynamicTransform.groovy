@@ -1,7 +1,9 @@
 package robust.gradle.plugin
 
 import com.android.build.api.transform.*
+import com.android.build.gradle.internal.InternalScope
 import com.android.build.gradle.internal.pipeline.TransformManager
+import com.google.common.collect.ImmutableSet
 import com.meituan.robust.Constants
 import javassist.ClassPool
 import org.gradle.api.Plugin
@@ -9,6 +11,8 @@ import org.gradle.api.Project
 import org.gradle.api.internal.classpath.Module
 import org.gradle.api.logging.Logger
 import robust.gradle.plugin.javaassist.JavaAssistInsertImpl
+
+import java.util.zip.GZIPOutputStream
 
 /**
  * Created by mivanzhang on 16/11/3.
@@ -49,7 +53,7 @@ class DynamicTransform extends Transform implements Plugin<Project> {
                 //FIXME: assembleRelease下屏蔽Prepare，这里因为还没有执行Task，没法直接通过当前的BuildType来判断，所以直接分析当前的startParameter中的taskname，
                 //另外这里有一个小坑task的名字不能是缩写必须是全称 例如assembleDebug不能是任何形式的缩写输入
                 if (taskName.endsWith("Debug") && taskName.contains("Debug")) {
-//                    logger.warn " Don't register robust transform for debug model !!! task is：${taskName}"
+                    logger.warn " Don't register robust transform for debug model !!! task is：${taskName}"
                     isDebugTask = true
                     break;
                 }
@@ -156,12 +160,42 @@ class DynamicTransform extends Transform implements Plugin<Project> {
         logger.quiet "check all class cost $cost second, class count: ${box.size()}"
         if(useASM){
 //            insertcodeStrategy=new AsmInsertImpl(hotfixPackageList,hotfixMethodList,exceptPackageList,exceptMethodList,isHotfixMethodLevel,isExceptMethodLevel);
-        }else {
+        } else {
             insertcodeStrategy=new JavaAssistInsertImpl(hotfixPackageList,hotfixMethodList,exceptPackageList,exceptMethodList,isHotfixMethodLevel,isExceptMethodLevel);
         }
         insertcodeStrategy.insertCode(box, jarFile);
+        writeMap2File(insertcodeStrategy.methodMap, Constants.METHOD_MAP_OUT_PATH)
 
+        logger.quiet "===robust print id start==="
+        for (String method : insertcodeStrategy.methodMap.keySet()) {
+            int id = insertcodeStrategy.methodMap.get(method);
+            System.out.println("key is   " + method + "  value is    " + id);
+        }
+        logger.quiet "===robust print id end==="
+
+        cost = (System.currentTimeMillis() - startTime) / 1000
+        logger.quiet "robust cost $cost second"
         logger.quiet '================dynamic robust   end================'
     }
 
+    private void writeMap2File(Map map, String path) {
+        File file = new File(project.buildDir.path + path);
+        if (!file.exists() && (!file.parentFile.mkdirs() || !file.createNewFile())) {
+//            logger.error(path + " file create error!!")
+        }
+        FileOutputStream fileOut = new FileOutputStream(file);
+
+        ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+        ObjectOutputStream objOut = new ObjectOutputStream(byteOut);
+        objOut.writeObject(map)
+        //gzip压缩
+        GZIPOutputStream gzip = new GZIPOutputStream(fileOut);
+        gzip.write(byteOut.toByteArray())
+        objOut.close();
+        gzip.flush();
+        gzip.close();
+        fileOut.flush()
+        fileOut.close()
+
+    }
 }
